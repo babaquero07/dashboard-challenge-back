@@ -23,6 +23,7 @@ export class UsersService {
       select: {
         id: true,
         email: true,
+        password: true,
       },
     });
 
