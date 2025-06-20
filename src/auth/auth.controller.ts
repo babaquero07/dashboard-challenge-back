@@ -1,6 +1,17 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthDto } from './dto/auth.dto';
 import { AuthService } from './auth.service';
+import { Request } from 'express';
+import { JwtAuthGuard } from './guards/jwt.guard';
 // import { LocalGuard } from './guards/local.guard';
 
 @Controller('auth')
@@ -12,5 +23,14 @@ export class AuthController {
   // @UseGuards(LocalGuard)
   login(@Body() authPayload: AuthDto) {
     return this.authService.login(authPayload);
+  }
+
+  @Get('status')
+  @UseGuards(JwtAuthGuard)
+  status(@Req() req: Request) {
+    console.log(req.user);
+    return {
+      message: 'ok',
+    };
   }
 }
