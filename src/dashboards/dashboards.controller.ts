@@ -13,10 +13,15 @@ import { CreateDashboardDto } from './dto/create-dashboard.dto';
 import { UpdateDashboardDto } from './dto/update-dashboard.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
+import { CreateWidgetTypeDto } from './widgetTypes/dto/create-widget-type.dto';
+import { WidgetTypesService } from './widgetTypes/widgetTypes.service';
 
 @Controller('dashboards')
 export class DashboardsController {
-  constructor(private readonly dashboardsService: DashboardsService) {}
+  constructor(
+    private readonly dashboardsService: DashboardsService,
+    private readonly widgetTypesService: WidgetTypesService,
+  ) {}
 
   @Post()
   @UseGuards(JwtAuthGuard)
@@ -34,6 +39,19 @@ export class DashboardsController {
       ok: true,
       message: 'Dashboard created successfully',
       data,
+    };
+  }
+
+  @Post('widget-types')
+  @UseGuards(JwtAuthGuard)
+  async createWidgetType(@Body() createWidgetTypeDto: CreateWidgetTypeDto) {
+    const widgetType =
+      await this.widgetTypesService.createWidgetType(createWidgetTypeDto);
+
+    return {
+      ok: true,
+      message: 'Widget type created successfully',
+      data: widgetType,
     };
   }
 
