@@ -22,4 +22,17 @@ export class WidgetTypesService {
       throw new InternalServerErrorException(error);
     }
   }
+
+  async getAllWidgetTypes() {
+    try {
+      const widgetTypes = await this.widgetTypeRepository.find();
+      return widgetTypes;
+    } catch (error) {
+      console.log(
+        '🚀 ~ WidgetTypesService ~ getAllWidgetTypes ~ error:',
+        error,
+      );
+      throw new InternalServerErrorException(error);
+    }
+  }
 }

@@ -55,6 +55,17 @@ export class DashboardsController {
     };
   }
 
+  @Get('widget-types')
+  @UseGuards(JwtAuthGuard)
+  async getAllWidgetTypes() {
+    const widgetTypes = await this.widgetTypesService.getAllWidgetTypes();
+
+    return {
+      ok: true,
+      data: widgetTypes,
+    };
+  }
+
   @Get()
   @UseGuards(JwtAuthGuard)
   async findAllByUser(@GetUser() user: { id: number; email: string }) {
