@@ -51,6 +51,7 @@ export class DashboardsService {
       where: {
         id,
       },
+      relations: ['dashboardComponents', 'dashboardComponents.widgetType'],
     });
 
     if (!dashboard) {
