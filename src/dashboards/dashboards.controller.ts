@@ -51,8 +51,14 @@ export class DashboardsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.dashboardsService.findOne(+id);
+  @UseGuards(JwtAuthGuard)
+  async findOne(@Param('id') id: string) {
+    const dashboard = await this.dashboardsService.findOne(+id);
+
+    return {
+      ok: true,
+      data: dashboard,
+    };
   }
 
   @Patch(':id')

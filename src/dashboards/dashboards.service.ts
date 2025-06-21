@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateDashboardDto } from './dto/create-dashboard.dto';
 import { UpdateDashboardDto } from './dto/update-dashboard.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -42,8 +46,18 @@ export class DashboardsService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} dashboard`;
+  async findOne(id: number) {
+    const dashboard = await this.dashboardRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!dashboard) {
+      throw new NotFoundException('Dashboard not found');
+    }
+
+    return dashboard;
   }
 
   update(id: number, updateDashboardDto: UpdateDashboardDto) {
