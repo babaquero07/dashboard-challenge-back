@@ -38,8 +38,16 @@ export class DashboardsController {
   }
 
   @Get()
-  findAll() {
-    return this.dashboardsService.findAll();
+  @UseGuards(JwtAuthGuard)
+  async findAllByUser(@GetUser() user: { id: number; email: string }) {
+    const { id: userId } = user;
+
+    const dashboards = await this.dashboardsService.findAllByUser(userId);
+
+    return {
+      ok: true,
+      data: dashboards,
+    };
   }
 
   @Get(':id')

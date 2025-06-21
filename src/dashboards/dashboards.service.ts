@@ -27,8 +27,19 @@ export class DashboardsService {
     }
   }
 
-  findAll() {
-    return `This action returns all dashboards`;
+  async findAllByUser(userId: number) {
+    try {
+      const dashboards = await this.dashboardRepository.find({
+        where: {
+          user: { id: userId },
+        },
+      });
+
+      return dashboards;
+    } catch (error) {
+      console.log('🚀 ~ DashboardsService ~ findAllByUser ~ error:', error);
+      throw new InternalServerErrorException(error);
+    }
   }
 
   findOne(id: number) {
