@@ -15,12 +15,15 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { CreateWidgetTypeDto } from './widgetTypes/dto/create-widget-type.dto';
 import { WidgetTypesService } from './widgetTypes/widgetTypes.service';
+import { DashboardComponentDto } from './components/dto/dashboard-component.dto';
+import { ComponentsService } from './components/components.service';
 
 @Controller('dashboards')
 export class DashboardsController {
   constructor(
     private readonly dashboardsService: DashboardsService,
     private readonly widgetTypesService: WidgetTypesService,
+    private readonly componentsService: ComponentsService,
   ) {}
 
   @Post()
@@ -63,6 +66,24 @@ export class DashboardsController {
     return {
       ok: true,
       data: widgetTypes,
+    };
+  }
+
+  @Post(':dashboardId/components')
+  @UseGuards(JwtAuthGuard)
+  async createComponent(
+    @Param('dashboardId') dashboardId: string,
+    @Body() createComponentDto: DashboardComponentDto,
+  ) {
+    const component = await this.componentsService.createComponent(
+      +dashboardId,
+      createComponentDto,
+    );
+
+    return {
+      ok: true,
+      message: 'Component created successfully',
+      data: component,
     };
   }
 

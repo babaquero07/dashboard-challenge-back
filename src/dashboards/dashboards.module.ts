@@ -7,6 +7,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { DashboardComponent } from './entities/dashboardComponent.entity';
 import { WidgetType } from './entities/widget_type.entity';
 import { WidgetTypesService } from './widgetTypes/widgetTypes.service';
+import { ComponentsService } from './components/components.service';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { WidgetTypesService } from './widgetTypes/widgetTypes.service';
     AuthModule,
   ],
   controllers: [DashboardsController],
-  providers: [DashboardsService, WidgetTypesService],
+  providers: [DashboardsService, WidgetTypesService, ComponentsService],
   exports: [DashboardsService],
 })
 export class DashboardsModule {}
