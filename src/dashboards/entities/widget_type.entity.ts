@@ -1,23 +1,16 @@
-import { User } from 'src/users/entities/user.entity';
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { DashboardComponent } from './dashboardComponent.entity';
 
 @Entity()
-export class Dashboard {
+export class WidgetType {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    type: 'varchar',
-    length: 255,
-  })
+  @Column({ unique: true, type: 'varchar', length: 255 })
   name: string;
+
+  @Column({ type: 'text', nullable: true })
+  description: string;
 
   @Column({
     type: 'timestamp',
@@ -32,14 +25,10 @@ export class Dashboard {
   })
   updated_at: Date;
 
-  // Relations - Many to one with user
-  @ManyToOne(() => User, (user) => user.dashboards)
-  user: User;
-
   // Relations - One to many with dashboard components
   @OneToMany(
     () => DashboardComponent,
-    (dashboardComponent) => dashboardComponent.dashboard,
+    (dashboardComponent) => dashboardComponent.widgetType,
   )
   dashboardComponents: DashboardComponent[];
 }
