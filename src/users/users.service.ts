@@ -57,7 +57,7 @@ export class UsersService {
       });
 
       await this.userRepository.save(user);
-      const { password: _, ...userWithoutPassword } = user;
+      const { password: _, dashboards: __, ...userWithoutPassword } = user;
 
       return userWithoutPassword;
     } catch (error) {
