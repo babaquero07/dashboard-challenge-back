@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Dashboard } from 'src/dashboards/entities/dashboard.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -31,4 +32,8 @@ export class User {
     onUpdate: 'CURRENT_TIMESTAMP',
   })
   updated_at: Date;
+
+  // Relations - One to many with dashboards
+  @OneToMany(() => Dashboard, (dashboard) => dashboard.user)
+  dashboards: Dashboard[];
 }
