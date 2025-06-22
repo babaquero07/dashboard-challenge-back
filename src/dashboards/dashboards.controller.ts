@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { DashboardsService } from './dashboards.service';
 import { CreateDashboardDto } from './dto/create-dashboard.dto';
@@ -72,18 +73,42 @@ export class DashboardsController {
   @Post(':dashboardId/components')
   @UseGuards(JwtAuthGuard)
   async createComponent(
-    @Param('dashboardId') dashboardId: string,
-    @Body() createComponentDto: DashboardComponentDto,
+    @Param('dashboardId', ParseIntPipe) dashboardId: number,
+    @Body() dashboardComponents: DashboardComponentDto[],
   ) {
-    const component = await this.componentsService.createComponent(
-      +dashboardId,
-      createComponentDto,
+    const components: DashboardComponentDto[] = dashboardComponents.map(
+      (component) => ({
+        ...component,
+        dashboardId,
+      }),
     );
+
+    await this.componentsService.createComponent(components);
 
     return {
       ok: true,
-      message: 'Component created successfully',
-      data: component,
+      message: 'Components created successfully',
+    };
+  }
+
+  @Patch(':dashboardId/components')
+  @UseGuards(JwtAuthGuard)
+  async updateComponents(
+    @Param('dashboardId', ParseIntPipe) dashboardId: number,
+    @Body() dashboardComponents: DashboardComponentDto[],
+  ) {
+    const components: DashboardComponentDto[] = dashboardComponents.map(
+      (component) => ({
+        ...component,
+        dashboardId,
+      }),
+    );
+
+    await this.componentsService.updateComponents(components);
+
+    return {
+      ok: true,
+      message: 'Components updated successfully',
     };
   }
 

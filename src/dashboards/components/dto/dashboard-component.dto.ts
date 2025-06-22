@@ -21,6 +21,10 @@ export class DashboardComponentDto {
   @IsNotEmpty({ message: 'Y is required' })
   y: number;
 
+  @IsNumber({ allowNaN: false }, { message: 'Dashboard ID must be a number' })
+  @IsNotEmpty({ message: 'dashboardId is required' })
+  dashboardId: number;
+
   @IsNumber({ allowNaN: false }, { message: 'Widget type ID must be a number' })
   @IsNotEmpty({ message: 'Widget type ID is required' })
   widgetTypeId: number;
