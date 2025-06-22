@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WidgetType } from '../entities/widget_type.entity';
 import { CreateWidgetTypeDto } from './dto/create-widget-type.dto';
+import { mockedWidgetTypes } from 'src/utils/mockedData';
 
 @Injectable()
 export class WidgetTypesService {
@@ -32,6 +33,20 @@ export class WidgetTypesService {
         '🚀 ~ WidgetTypesService ~ getAllWidgetTypes ~ error:',
         error,
       );
+      throw new InternalServerErrorException(error);
+    }
+  }
+
+  async seed() {
+    try {
+      const widgetTypes = mockedWidgetTypes.map((widgetType) =>
+        this.widgetTypeRepository.create(widgetType),
+      );
+      await this.widgetTypeRepository.save(widgetTypes);
+
+      return widgetTypes;
+    } catch (error) {
+      console.log('🚀 ~ WidgetTypesService ~ seed ~ error:', error);
       throw new InternalServerErrorException(error);
     }
   }

@@ -46,6 +46,16 @@ export class DashboardsController {
     };
   }
 
+  @Get('seed')
+  async seed() {
+    await this.widgetTypesService.seed();
+
+    return {
+      ok: true,
+      message: 'Database seeded successfully',
+    };
+  }
+
   @Post('widget-types')
   @UseGuards(JwtAuthGuard)
   async createWidgetType(@Body() createWidgetTypeDto: CreateWidgetTypeDto) {
