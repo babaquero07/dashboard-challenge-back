@@ -1,99 +1,253 @@
+# Dashboard Challenge Backend
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descripción General del Proyecto
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este es el backend de la aplicación **Dashboard Challenge**, desarrollado con [NestJS](https://nestjs.com/), un framework progresivo de Node.js para construir aplicaciones del lado del servidor eficientes y escalables.
 
-## Description
+### Características Principales
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Autenticación JWT**: Sistema de autenticación seguro con tokens JWT
+- **Gestión de Usuarios**: Registro y autenticación de usuarios
+- **Dashboards Dinámicos**: Creación y gestión de dashboards personalizables
+- **Componentes de Widget**: Sistema de componentes reutilizables para dashboards
+- **Base de Datos MySQL**: Persistencia de datos con TypeORM
+- **API RESTful**: Endpoints bien estructurados con versionado
+- **Validación de Datos**: Validación automática de entrada con class-validator
+- **CORS Configurado**: Soporte para aplicaciones frontend
 
-## Project setup
+### Estructura del Proyecto
 
-```bash
-$ npm install
+```
+src/
+├── auth/                 # Módulo de autenticación
+│   ├── guards/          # Guards de autenticación
+│   ├── strategies/      # Estrategias de Passport
+│   └── dto/            # Data Transfer Objects
+├── users/               # Módulo de usuarios
+│   ├── entities/       # Entidades de base de datos
+│   └── dto/           # DTOs de usuarios
+├── dashboards/          # Módulo de dashboards
+│   ├── components/     # Componentes de dashboard
+│   ├── widgetTypes/    # Tipos de widgets
+│   ├── entities/       # Entidades de dashboard
+│   └── dto/           # DTOs de dashboard
+└── utils/              # Utilidades y datos mock
 ```
 
-## Compile and run the project
+## Requisitos del Sistema
+
+### Software Requerido
+
+- **Node.js**: Versión 18.x o superior
+- **npm**: Gestor de paquetes de Node.js
+- **MySQL**: Versión 8.0 o superior
+- **Docker** (opcional): Para ejecutar MySQL en contenedor
+
+### Versiones Recomendadas
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+Node.js: 18.x o 20.x
+npm: 9.x o superior
+MySQL: 8.0
+Docker: 20.x o superior (opcional)
 ```
 
-## Run tests
+## Configuración del Proyecto
+
+### 1. Clonar el Repositorio
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone <url-del-repositorio>
+cd dashboard-challenge-back
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 2. Instalar Dependencias
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 3. Configurar Variables de Entorno
 
-## Resources
+Crear un archivo `.env` en la raíz del proyecto con las siguientes variables:
 
-Check out a few resources that may come in handy when working with NestJS:
+```env
+# Configuración de Base de Datos
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=dashboard_challenge
+DB_USER=root
+DB_PASSWORD=tu_password
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Configuración de JWT
+JWT_SECRET=tu_jwt_secret_
+# Configuración del Servidor
+PORT=3000
+```
 
-## Support
+### 4. Configurar Base de Datos
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+#### Opción A: Usando Docker (Recomendado)
 
-## Stay in touch
+```bash
+# Levantar la base de datos MySQL
+docker-compose up -d db
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+#### Opción B: MySQL Local
 
-## License
+1. Instalar MySQL en tu sistema
+2. Crear la base de datos:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```sql
+CREATE DATABASE dashboard_challenge;
+```
+
+### 5. Ejecutar Migraciones
+
+La aplicación está configurada con `synchronize: true` en desarrollo, por lo que las tablas se crearán automáticamente al iniciar la aplicación.
+
+### 6. Poblar Base de Datos con Datos Iniciales
+
+Después de configurar las variables de entorno y la base de datos, ejecuta el siguiente endpoint para crear los widgets por defecto:
+
+```bash
+# Opción A: Usando curl
+curl -X GET http://localhost:3000/api/v1/dashboards/seed
+
+# Opción B: Usando un cliente HTTP como Postman o Insomnia
+GET http://localhost:3000/api/v1/dashboards/seed
+```
+
+Este endpoint creará los tipos de widgets predeterminados necesarios para el funcionamiento de la aplicación.
+
+## Ejecutar el Proyecto
+
+### Modo Desarrollo
+
+```bash
+# Ejecutar en modo desarrollo con hot reload
+npm run start:dev
+```
+
+### Modo Producción
+
+```bash
+# Compilar el proyecto
+npm run build
+
+# Ejecutar en modo producción
+npm run start:prod
+```
+
+### Otros Comandos Útiles
+
+```bash
+# Ejecutar en modo debug
+npm run start:debug
+
+# Ejecutar tests unitarios
+npm run test
+
+# Ejecutar tests en modo watch
+npm run test:watch
+
+# Ejecutar tests e2e
+npm run test:e2e
+
+# Generar reporte de cobertura
+npm run test:cov
+
+# Linting y formateo
+npm run lint
+npm run format
+```
+
+## Endpoints de la API
+
+### Autenticación
+
+- `POST /api/v1/auth/login` - Iniciar sesión
+- `GET /api/v1/auth/status` - Verificar estado de autenticación
+
+### Usuarios
+
+- `POST /api/v1/users` - Crear usuario
+- `DELETE /api/v1/users/:id` - Eliminar usuario
+
+### Dashboards
+
+- `GET /api/v1/dashboards` - Obtener dashboards del usuario
+- `POST /api/v1/dashboards` - Crear dashboard
+- `GET /api/v1/dashboards/:id` - Obtener dashboard específico
+- `PATCH /api/v1/dashboards/:id` - Actualizar dashboard
+- `DELETE /api/v1/dashboards/:id` - Eliminar dashboard
+
+### Widget Types
+
+- `GET /api/v1/dashboards/widget-types` - Obtener tipos de widgets
+- `POST /api/v1/dashboards/widget-types` - Crear tipo de widget
+
+### Componentes
+
+- `POST /api/v1/dashboards/:dashboardId/components` - Crear componentes
+- `PATCH /api/v1/dashboards/:dashboardId/components` - Actualizar componentes
+
+### Utilidades
+
+- `GET /api/v1/dashboards/seed` - Poblar base de datos con datos iniciales
+
+## Estructura de la Base de Datos
+
+### Tablas Principales
+
+- **users**: Información de usuarios
+- **dashboards**: Dashboards creados por usuarios
+- **widget_types**: Tipos de widgets disponibles
+- **dashboard_components**: Componentes de cada dashboard
+
+## Configuración de CORS
+
+La aplicación está configurada para aceptar conexiones desde:
+
+- `http://localhost:5173`
+- `http://127.0.0.1:5173`
+
+## Desarrollo
+
+### Estructura de Archivos
+
+- **Entidades**: Definidas en `src/*/entities/`
+- **DTOs**: Data Transfer Objects en `src/*/dto/`
+- **Servicios**: Lógica de negocio en `src/*/*.service.ts`
+- **Controladores**: Endpoints de la API en `src/*/*.controller.ts`
+
+### Convenciones
+
+- Usar decoradores de class-validator para validación
+- Implementar guards para protección de rutas
+- Seguir el patrón de inyección de dependencias de NestJS
+- Usar TypeORM para operaciones de base de datos
+
+## Troubleshooting
+
+### Problemas Comunes
+
+1. **Error de conexión a MySQL**:
+
+   - Verificar que MySQL esté ejecutándose
+   - Comprobar credenciales en `.env`
+   - Asegurar que la base de datos existe
+
+2. **Error de puerto en uso**:
+
+   - Cambiar el puerto en `.env` o `main.ts`
+   - Verificar que no haya otra aplicación usando el puerto 3000
+
+3. **Error de dependencias**:
+   - Eliminar `node_modules` y `package-lock.json`
+   - Ejecutar `npm install` nuevamente
